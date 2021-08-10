@@ -18,7 +18,7 @@ import TimeAgo from 'timeago-react';
 export default function ChatScreen({chat, messages}: ChatProps) {
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
-  const endOfMessageRef = useRef(null);
+  const endOfMessageRef = useRef<null | HTMLDivElement>(null);
   const router = useRouter();
   const id = router?.query?.id?.[0] || '';
   const [messagesSnapshot] = useCollection(
