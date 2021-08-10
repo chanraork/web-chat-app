@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { auth } from "../lib";
 
 interface MessageProps {
-  user: string[];
+  user: string;
   message: any;
 }
 
