@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components"
 import { auth, db } from "../lib";
-import { ChatProps } from "../pages/chat/chat.interface";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { useCollection } from "react-firebase-hooks/firestore";
@@ -14,6 +13,7 @@ import { useRef, useState } from "react";
 import firebase from 'firebase';
 import getRecipientEmail from "../utils/getRecipientEmail";
 import TimeAgo from 'timeago-react';
+import { ChatProps } from "../pages/chat/[id]";
 
 export default function ChatScreen({chat, messages}: ChatProps) {
   const [user] = useAuthState(auth);

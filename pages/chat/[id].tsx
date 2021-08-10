@@ -3,9 +3,18 @@ import styled from "styled-components";
 import Sidebar from "../../components/Sidebar";
 import ChatScreen from "../../components/ChatScreen";
 import { auth, db } from "../../lib";
-import { ChatProps } from "./chat.interface";
 import { useAuthState } from "react-firebase-hooks/auth";
 import getRecipientEmail from "../../utils/getRecipientEmail";
+
+export interface ChatProps {
+  messages: string;
+  chat: Chat;
+}
+
+interface Chat {
+  id: string;
+  users: string[];
+}
 
 export default function Chat({ chat, messages }: ChatProps) {
   const [user] = useAuthState(auth);
@@ -29,9 +38,10 @@ export async function getServerSideProps(context: any) {
     .collection("messages")
     .orderBy("timestamp", "asc")
     .get();
-  
+
   const messages = messageRes.docs.map(doc => ({
     id: doc.id,
+    timestamp: doc.data().timestamp,
     ...doc.data()
   })).map(messages => ({  
     ...messages,
