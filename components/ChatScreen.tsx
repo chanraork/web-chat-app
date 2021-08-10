@@ -20,10 +20,11 @@ export default function ChatScreen({chat, messages}: ChatProps) {
   const [input, setInput] = useState("");
   const endOfMessageRef = useRef(null);
   const router = useRouter();
+  const id = router?.query?.id?.[0] || '';
   const [messagesSnapshot] = useCollection(
     db
     .collection("chats")
-    .doc(router?.query?.id)
+    .doc(id)
     .collection("messages")
     .orderBy("timestamp", "asc")
   );
@@ -49,7 +50,7 @@ export default function ChatScreen({chat, messages}: ChatProps) {
 
   const [recipientSnapshot] = useCollection(db.collection("users").where("email", "==", getRecipientEmail(chat.users, user)));
 
-  const sendMessage = (e: MouseEvent) => {
+  const sendMessage = (e: any) => {
     e.preventDefault();
 
     // update the last seen
@@ -60,7 +61,7 @@ export default function ChatScreen({chat, messages}: ChatProps) {
       { merge: true }
     );
 
-    db.collection("chats").doc(router.query.id).collection("messages").add({
+    db.collection("chats").doc(id).collection("messages").add({
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       message: input,
       user: user?.email,
